@@ -60,6 +60,8 @@ jobs:
           description: Deploying application
           wait-until-deployed: true
 
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./deploy/donghyun_backend.zip s3://dongh/donghyun_backend/donghyun_backend.zip
 # CI 실행 완료 시 메일로 알람
       - name: Send notification
         if: always()
