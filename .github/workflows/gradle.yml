@@ -43,7 +43,7 @@ jobs:
           cd before-deploy && zip -r before-deploy *
           cd ../ && mkdir -p deploy
           mv before-deploy/before-deploy.zip deploy/donghyun_backend.zip
-          ls
+          ls deploy
 
   deploy:
     needs: build
@@ -62,7 +62,7 @@ jobs:
           wait-until-deployed: true
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./deploy/donghyun_backend.zip s3://dongh/donghyun_backend/donghyun_backend.zip
+        run: aws s3 cp --region ap-northeast-2 deploy/donghyun_backend.zip s3://dongh/donghyun_backend/donghyun_backend.zip
 # CI 실행 완료 시 메일로 알람
       - name: Send notification
         if: always()
