@@ -61,7 +61,7 @@ jobs:
           wait-until-deployed: true
 
       - name: Deploy to CodeDeploy
-        uses: aws-actions/aws-codedeploy@v3
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
