@@ -47,7 +47,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Upload to S3
         uses: actions/aws/s3@v3
@@ -55,13 +54,13 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           region: ap-northeast-2
-          bucket-name: spring-build
+          bucket-name: dongh
           overwrite: true
           source: deploy
           wait-until-deployed: true
 
       - name: Deploy to CodeDeploy
-        uses: aws-actions/configure-aws-credentials@v3
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
