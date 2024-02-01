@@ -65,6 +65,7 @@ jobs:
         if: always()
         uses: dawidd6/action-send-mail@v2
         with:
+          body: hello
           server_address: smtp.gmail.com
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
