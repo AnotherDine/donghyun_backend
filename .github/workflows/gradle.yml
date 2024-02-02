@@ -47,7 +47,7 @@ jobs:
           cp build/libs/*.jar before-deploy/
           cd before-deploy && zip -r before-deploy *
           cd ../ && mkdir -p deploy
-          mv before-deploy/before-deploy.zip deploy/$FILE_NAME
+          mv before-deploy/before-deploy.zip deploy/$FILENAME
           ls deploy
 
       - name: Deploy to CodeDeploy
