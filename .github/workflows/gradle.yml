@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+env:
+  FILE_NAME: deploy.zip
+  AWS_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+  PROJECT_NAME: ${{ secrets.AWS_CODE_DPLOY_APP_NAME }}
+  DEPLOY_GROUP_NAME: ${{ secrets.AWS_CODE_DPLOY_GROUP_NAME }}
 
 jobs:
   build:
@@ -42,7 +47,7 @@ jobs:
           cp build/libs/*.jar before-deploy/
           cd before-deploy && zip -r before-deploy *
           cd ../ && mkdir -p deploy
-          mv before-deploy/before-deploy.zip deploy/donghyun_backend.zip
+          mv before-deploy/before-deploy.zip deploy/$FILE_NAME
           ls deploy
 
       - name: Deploy to CodeDeploy
@@ -51,18 +56,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ap-northeast-2
-          application-name: $CODE_DEPLOY_APP_NAME
-          deployment-group-name: $DEPLOYMENT_GROUP_NAME
-          deployment-config-name: CodeDeployDefault.OneAtATime
-          description: Deploying application
-          wait-until-deployed: true
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./deploy/donghyun_backend.zip s3://dongh/donghyun_backend/donghyun_backend.zip
+        run: aws s3 cp --region ap-northeast-2 ./$FILENAME s3://$AWS_BUCKET_NAME/$PROJECT_NAME/$FILENAME
 
-      # S3 버킷에 업로드 된 파일을 대상으로 CodeDeploy에서 배포 요청
       - name: Code Deploy
-        run: aws deploy create-deployment --s3-location bucket=dongh,bundleType=zip,key=donghyun_backend/donghyun_backend.zip
+        run: aws deploy create-deployment --application-name $PROJECT_NAME --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name $DEPLOY_GROUP_NAME --s3-location bucket=$AWS_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$FILENAME
 
       # CI 실행 완료 시 메일로 알람
       - name: Send notification
