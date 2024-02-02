@@ -7,8 +7,8 @@ on:
 env:
   FILENAME: deploy.zip
   AWS_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
-  PROJECT_NAME: ${{ secrets.AWS_CODE_DPLOY_APP_NAME }}
-  DEPLOY_GROUP_NAME: ${{ secrets.AWS_CODE_DPLOY_GROUP_NAME }}
+  PROJECT_NAME: ${{ secrets.AWS_CODE_DEPLOY_APP_NAME }}
+  DEPLOY_GROUP_NAME: ${{ secrets.AWS_CODE_DEPLOY_GROUP_NAME }}
 
 jobs:
   build:
