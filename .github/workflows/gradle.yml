@@ -58,7 +58,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./$FILENAME s3://$AWS_BUCKET_NAME/$PROJECT_NAME/$FILENAME
+        run: aws s3 cp --region ap-northeast-2 ./deploy/$FILENAME s3://$AWS_BUCKET_NAME/$PROJECT_NAME/$FILENAME
 
       - name: Code Deploy
         run: aws deploy create-deployment --application-name $PROJECT_NAME --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name $DEPLOY_GROUP_NAME --s3-location bucket=$AWS_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$FILENAME
