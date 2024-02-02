@@ -1,6 +1,6 @@
 PROJECT_ROOT="/home/ec2-user/app"
-JAR_FILE_NAME="back-0.0.1-SNAPSHOT.jar"
-JAR_FILE="$PROJECT_ROOT/back-0.0.1-SNAPSHOT.jar"
+JAR_FILE_NAME="donghyun_backend-0.0.1-SNAPSHOT.jar"
+JAR_FILE="$PROJECT_ROOT/donghyun_backend-0.0.1-SNAPSHOT.jar"
 
 APP_LOG="$PROJECT_ROOT/application.log"
 ERROR_LOG="$PROJECT_ROOT/error.log"
