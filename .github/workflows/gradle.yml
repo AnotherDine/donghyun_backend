@@ -51,20 +51,25 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ap-northeast-2
-          application-name: donghyun_backend
-          deployment-group-name: donghyun_backend
+          application-name: $CODE_DEPLOY_APP_NAME
+          deployment-group-name: $DEPLOYMENT_GROUP_NAME
           deployment-config-name: CodeDeployDefault.OneAtATime
           description: Deploying application
           wait-until-deployed: true
 
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./deploy/donghyun_backend.zip s3://dongh/donghyun_backend/donghyun_backend.zip
-# CI 실행 완료 시 메일로 알람
+
+      # S3 버킷에 업로드 된 파일을 대상으로 CodeDeploy에서 배포 요청
+      - name: Code Deploy
+        run: aws deploy create-deployment --s3-location bucket=dongh,bundleType=zip,key=donghyun_backend/donghyun_backend.zip
+
+      # CI 실행 완료 시 메일로 알람
       - name: Send notification
         if: always()
         uses: dawidd6/action-send-mail@v2
         with:
-          body: hello
+          body: success Deploy!!!
           server_address: smtp.gmail.com
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
