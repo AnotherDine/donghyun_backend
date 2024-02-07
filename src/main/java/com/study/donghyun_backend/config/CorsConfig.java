@@ -11,12 +11,12 @@ public class CorsConfig implements WebMvcConfigurer {
     public CorsConfig() {
         System.out.println("MyConfiguration bean is created.");
     }
-    
+
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedMethods("GET")
+                .allowedMethods("*")
                 .allowedOrigins("*")
                 .allowedHeaders("*")
                 .maxAge(3000)
